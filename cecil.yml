@@ -1,7 +1,8 @@
 # Site configuration: https://cecil.app/documentation/configuration/
 title: 'Princess Boutique'
 baseline: 'Sacs & chaussures pour femme'
-baseurl: 'http://localhost:8000/'
+baseurl: 'https://princessekalinga-alt.github.io/princess-boutique/'
+
 description: 'Sacs à main et chaussures pour femme, sélectionnés avec soin par Princess Boutique.'
 language: fr
 languages:
