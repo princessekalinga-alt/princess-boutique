@@ -1,0 +1,25 @@
+{% extends '_default/page.html.twig' %}
+
+{% block head %}
+    {{- parent() ~}}
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+{% endblock head %}
+
+{#- adds the site stylesheet, compiled from Sass ~#}
+{%- block head_css ~%}
+    {{- parent() ~}}
+    {{ css(asset('css/style.scss')) }}
+{%- endblock head_css ~%}
+
+{%- block footer ~%}
+      <div class="footer-brand">
+        <a href="{{ url(site.home) }}">{{ site.title|e }}</a>
+        <p>{{ site.baseline|e }}</p>
+      </div>
+      <nav class="footer-links" aria-label="Liens utiles">
+        <a href="{{ url(site.home) }}#collection">La collection</a>
+        <a href="{{ url(site.home) }}#contact">Contact</a>
+      </nav>
+      {{- include('partials/shop-footer-links.html.twig', {}, with_context=false) ~}}
+      <small>&copy; {{ 'now'|date('Y') }} {{ site.title|e }}. Tous droits réservés.</small>
+{%- endblock footer ~%}

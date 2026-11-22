@@ -1,0 +1,14 @@
+<nav class="footer-contact" aria-label="Coordonnées et réseaux sociaux">
+  {%- if site.data.shop.email|default('') ~%}
+  <a href="mailto:{{ site.data.shop.email|e('html_attr') }}">{{ site.data.shop.email|e }}</a>
+  {%- endif ~%}
+  {%- if site.data.shop.whatsapp|default('') ~%}
+  <a href="https://wa.me/{{ site.data.shop.whatsapp|e('html_attr') }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  {%- endif ~%}
+  {%- if site.data.shop.instagram|default('') ~%}
+  <a href="{{ site.data.shop.instagram|e('html_attr') }}" target="_blank" rel="noopener noreferrer">Instagram</a>
+  {%- endif ~%}
+  {%- if site.data.shop.facebook|default('') ~%}
+  <a href="{{ site.data.shop.facebook|e('html_attr') }}" target="_blank" rel="noopener noreferrer">Facebook</a>
+  {%- endif ~%}
+</nav>

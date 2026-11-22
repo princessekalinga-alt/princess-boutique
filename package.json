@@ -1,0 +1,16 @@
+{
+  "name": "cecil",
+  "version": "1.0.0",
+  "description": "Site vitrine marchand statique, en français, construit avec [Cecil](https://cecil.app). Les commandes et demandes de prix sont orientées vers WhatsApp ; le formulaire de contact prépare un e-mail dans l'application de la visiteuse. Aucun paiement ni panier n'est traité sur le site.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.119.2"
+  }
+}

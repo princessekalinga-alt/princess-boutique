@@ -1,0 +1,21 @@
+# Visuels d'illustration : remplacez noms, descriptions et images par votre catalogue réel.
+- name: Le sac rose
+  category: Sac à main
+  image: images/bag-rose.webp
+  alt: Sac à main rose poudré à bandoulière, présenté sur un fond clair
+  label: Coup de cœur
+- name: Le sac tressé
+  category: Sac à main
+  image: images/bag-sienna.webp
+  alt: Sac à main tressé aux tons chauds
+  label: Sélection
+- name: Les escarpins fleuris
+  category: Chaussures
+  image: images/heels-rose.webp
+  alt: Escarpins à talons imprimés de fleurs sur fond bleu clair
+  label: Nouveauté
+- name: Le sac imprimé
+  category: Sac à main
+  image: images/bag-classic.webp
+  alt: Sac à main rouge structuré avec une poignée
+  label: Sélection
