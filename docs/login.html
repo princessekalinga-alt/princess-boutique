@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7eeec">
+
+<title>Connexion | Princess Boutique</title>
+
+<style>
+:root{
+    --ink:#241e1c;
+    --muted:#766b67;
+    --rose:#f7eeec;
+    --rose-dark:#b87978;
+    --gold:#a98651;
+    --line:#e7dcda;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    font-family:"Segoe UI",sans-serif;
+    background:#f7eeec;
+}
+
+.auth-page{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:1fr 420px;
+}
+
+.brand-panel{
+    background:
+    linear-gradient(rgba(36,30,28,.78),rgba(36,30,28,.35)),
+    url("/images/fashion-edit.webp") center/cover no-repeat;
+    color:white;
+    padding:4rem;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.brand-title{
+    font-size:4rem;
+    font-family:Georgia,serif;
+    font-weight:400;
+}
+
+.brand-title em{
+    color:#e5bdbb;
+    font-style:italic;
+}
+
+.auth-panel{
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:2rem;
+}
+
+.auth-card{
+    width:100%;
+    max-width:360px;
+}
+
+h1{
+    margin-bottom:10px;
+}
+
+.intro{
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+.auth-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    margin-bottom:20px;
+}
+
+.auth-tab{
+    border:none;
+    background:none;
+    border-bottom:2px solid transparent;
+    cursor:pointer;
+    padding:12px;
+}
+
+.auth-tab.is-active{
+    border-color:black;
+    font-weight:bold;
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-size:14px;
+    font-weight:600;
+}
+
+input{
+    width:100%;
+    height:50px;
+    padding:0 12px;
+    border:1px solid #ddd;
+}
+
+.password-field{
+    position:relative;
+}
+
+.password-toggle{
+    position:absolute;
+    right:10px;
+    top:0;
+    bottom:0;
+    border:none;
+    background:none;
+    cursor:pointer;
+}
+
+.submit-button{
+    width:100%;
+    height:50px;
+    border:none;
+    background:#241e1c;
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.submit-button:hover{
+    background:#403632;
+}
+
+.message{
+    margin-top:15px;
+    min-height:20px;
+    font-size:14px;
+}
+
+.success{
+    color:green;
+}
+
+.error{
+    color:#c0392b;
+}
+
+@media(max-width:768px){
+
+    .auth-page{
+        grid-template-columns:1fr;
+    }
+
+    .brand-panel{
+        min-height:220px;
+    }
+
+    .brand-title{
+        font-size:2.5rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="auth-page">
+
+    <section class="brand-panel">
+        <h2 class="brand-title">
+            Votre élégance,<br>
+            <em>votre histoire.</em>
+        </h2>
+    </section>
+
+    <section class="auth-panel">
+
+        <div class="auth-card">
+
+            <h1 id="auth-title">Bienvenue</h1>
+
+            <p class="intro" id="auth-intro">
+                Connectez-vous pour accéder à votre espace.
+            </p>
+
+            <div class="auth-tabs">
+
+                <button
+                    class="auth-tab is-active"
+                    type="button"
+                    data-mode="login">
+                    Connexion
+                </button>
+
+                <button
+                    class="auth-tab"
+                    type="button"
+                    data-mode="signup">
+                    Créer un compte
+                </button>
+
+            </div>
+
+            <form id="auth-form">
+
+                <div class="field">
+                    <label>Email</label>
+
+                    <input
+                        id="email"
+                        type="email"
+                        required>
+                </div>
+
+                <div class="field">
+                    <label>Mot de passe</label>
+
+                    <div class="password-field">
+
+                        <input
+                            id="password"
+                            type="password"
+                            minlength="6"
+                            required>
+
+                        <button
+                            type="button"
+                            id="password-toggle"
+                            class="password-toggle">
+                            Afficher
+                        </button>
+
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    id="submit-button"
+                    class="submit-button">
+                    Se connecter
+                </button>
+
+                <p
+                    id="message"
+                    class="message">
+                </p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script type="module">
+
+import { createClient }
+from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+    "https://vconzsfwvvbewkvvhrrg.supabase.co",
+    "sb_publishable_51aqwwTxb3hMiUWEdAT1vg_ApoNNiYh"
+);
+
+let mode = "login";
+
+const form = document.getElementById("auth-form");
+const message = document.getElementById("message");
+const title = document.getElementById("auth-title");
+const intro = document.getElementById("auth-intro");
+const submitButton = document.getElementById("submit-button");
+
+document
+.querySelectorAll(".auth-tab")
+.forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+        mode = tab.dataset.mode;
+
+        document
+        .querySelectorAll(".auth-tab")
+        .forEach(btn =>
+            btn.classList.remove("is-active")
+        );
+
+        tab.classList.add("is-active");
+
+        if(mode === "login"){
+
+            title.textContent = "Bienvenue";
+            intro.textContent =
+                "Connectez-vous pour accéder à votre espace.";
+            submitButton.textContent =
+                "Se connecter";
+
+        }else{
+
+            title.textContent =
+                "Créer un compte";
+
+            intro.textContent =
+                "Créez votre compte Princess.";
+
+            submitButton.textContent =
+                "Créer mon compte";
+        }
+
+        message.textContent = "";
+    });
+
+});
+
+document
+.getElementById("password-toggle")
+.addEventListener("click", () => {
+
+    const password =
+        document.getElementById("password");
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+    }else{
+
+        password.type = "password";
+    }
+});
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    message.textContent = "";
+    message.className = "message";
+
+    const credentials = {
+        email: document
+            .getElementById("email").value.trim(),
+        password: document
+            .getElementById("password").value
+    };
+
+    try {
+
+        let result;
+
+        if(mode === "login"){
+
+            result =
+                await supabase.auth
+                .signInWithPassword(credentials);
+
+        } else {
+
+            result =
+                await supabase.auth
+                .signUp(credentials);
+        }
+
+        if(result.error){
+
+            message.classList.add("error");
+            message.textContent =
+                result.error.message;
+
+            return;
+        }
+
+        if(mode === "signup"){
+
+            message.classList.add("success");
+
+            message.textContent =
+                "Compte créé avec succès.";
+
+            return;
+        }
+
+        message.classList.add("success");
+
+        message.textContent =
+            "Connexion réussie...";
+
+        window.location.href = "/";
+
+    } catch {
+
+        message.classList.add("error");
+
+        message.textContent =
+            "Une erreur est survenue.";
+    }
+
+});
+
+</script>
+
+</body>
+</html>
