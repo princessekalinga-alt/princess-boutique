@@ -17,6 +17,9 @@
     <a href="#avis">Vos avis</a>
     <a href="#contact">Contact</a>
   </nav>
+
+  <button id="logoutBtn">Déconnexion</button>
+
   <a class="header-cta" href="#collection">Explorer la collection <span aria-hidden="true">↗</span></a>
 {% endblock header %}
 
@@ -136,6 +139,39 @@
       {%- endif ~%}
     </div>
   </section>
+  {% block javascript %}
+<script type="module">
+import { createClient }
+from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://vconzsfwvvbewkvvhrrg.supabase.co",
+  "sb_publishable_51aqwwTxb3hMiUWEdAT1vg_ApoNNiYh"
+);
+
+const {
+  data: { session }
+} = await supabase.auth.getSession();
+
+if (!session) {
+  window.location.replace(
+    "https://princessekalinga-alt.github.io/princess-boutique/login.html"
+  );
+}
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+
+    window.location.replace(
+      "https://princessekalinga-alt.github.io/princess-boutique/login.html"
+    );
+  });
+}
+</script>
+{% endblock javascript %}
 {% endblock content %}
 
 {% block footer %}
